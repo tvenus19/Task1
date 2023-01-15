@@ -1,0 +1,45 @@
+--- 
+- name: User management
+  hosts: ec2_instances
+  become: yes
+  tasks: 
+    - name: Ensure operations group exists
+      ansible.builtin.group:
+        name: operations
+        state: present
+
+    - name: Add the user 'khunt'
+      ansible.builtin.user:
+        name: khunt
+        password: SdJPERgm2m2ACHT7
+        group: operations
+
+    - name: Add the user 'jdoeyr'
+      ansible.builtin.user:
+        name: jdoeyr
+        password: SdJPERgm2m2ACHT7
+        group: operations
+
+    - name: Add the user 'pnongrata'
+      ansible.builtin.user:
+        name: pnongrata
+        password: SdJPERgm2m2ACHT7
+        group: operations
+
+    - name: Add the user 'tobinbell'
+      ansible.builtin.user:
+        name: tobinbell
+        password: SdJPERgm2m2ACHT7
+        group: operations
+
+- name: Nginx installation
+  hosts: all
+  tasks:
+    - name: ensure nginx is at the latest version
+      apt: name=nginx state=latest
+      become: yes
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
+      become: yes
